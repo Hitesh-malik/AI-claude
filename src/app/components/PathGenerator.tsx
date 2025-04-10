@@ -57,8 +57,6 @@ export default function PathGenerator() {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-6 text-center">Claude Learning Path Generator</h1>
-      
       {!isGenerationComplete && (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
