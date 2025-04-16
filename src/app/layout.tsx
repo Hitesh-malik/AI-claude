@@ -63,17 +63,13 @@
 //     </html>
 //   );
 // }
-
-
-
-
 import './globals.css';
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Navbar from '@/app/components/Navbar';
 
 export const metadata: Metadata = {
   title: 'Learning Path Advisor',
-  description: 'Create personalized learning paths powered by Claude AI',
+  description: 'Create personalized learning paths powered by AI',
 };
 
 export default function RootLayout({
@@ -83,27 +79,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-white min-h-screen">
-        <header className="bg-white shadow-sm">
-          <div className="container mx-auto px-4 py-4">
-            <nav className="flex items-center justify-between">
-              <Link href="/" className="text-xl font-bold text-purple-600">
-                Learning Path Advisor
-              </Link>
-              
-              <div className="flex gap-6">
-                <Link 
-                  href="/generate-path" 
-                  className="text-gray-600 hover:text-purple-600"
-                >
-                  Generate Path
-                </Link>
-              </div>
-            </nav>
-          </div>
-        </header>
+      <body className="bg-gray-50 min-h-screen flex flex-col">
+        <Navbar />
         
-        <main className="min-h-screen bg-white">
+        <main className="flex-1">
           {children}
         </main>
         

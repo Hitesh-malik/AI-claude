@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { AssessmentButton } from './SlidePanelAssessment';
+import { GraphicalRepresentationButton } from './GraphicalRepresentation';
 
 interface ResultDisplayProps {
   content: string;
@@ -8,13 +10,13 @@ interface ResultDisplayProps {
   className?: string;
 }
 
-export default function ResultDisplay({ 
-  content, 
-  title = 'Results', 
-  className = '' 
+export default function ResultDisplay({
+  content,
+  title = 'Results',
+  className = ''
 }: ResultDisplayProps) {
   const [copied, setCopied] = useState(false);
-
+  
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(content);
@@ -24,7 +26,7 @@ export default function ResultDisplay({
       console.error('Failed to copy text: ', err);
     }
   };
-
+  
   return (
     <div className={`bg-white rounded-lg shadow-md overflow-hidden ${className}`}>
       <div className="flex items-center justify-between px-6 py-4 bg-gray-50 border-b">
@@ -39,15 +41,32 @@ export default function ResultDisplay({
       
       <div className="p-6 overflow-auto">
         <div className="prose prose-blue max-w-none">
-          {/* Simple markdown renderer */}
           {content.split('\n').map((line, i) => {
-            // Handle headings
+            // Handle headings with assessment buttons
             if (line.startsWith('# ')) {
-              return <h1 key={i} className="text-2xl font-bold mt-6 mb-4">{line.slice(2)}</h1>;
+              const headingText = line.slice(2);
+              return (
+                <div key={i} className="flex flex-wrap items-center justify-between gap-2 mt-6 mb-4">
+                  <h1 className="text-2xl font-bold">{headingText}</h1>
+                  <GraphicalRepresentationButton topic={headingText} content={content} />
+                </div>
+              );
             } else if (line.startsWith('## ')) {
-              return <h2 key={i} className="text-xl font-bold mt-5 mb-3">{line.slice(3)}</h2>;
+              const headingText = line.slice(3);
+              return (
+                <div key={i} className="flex flex-wrap items-center justify-between gap-2 mt-5 mb-3">
+                  <h2 className="text-xl font-bold">{headingText}</h2>
+                  <AssessmentButton topic={findParentTopic(i, content) || headingText} subtopic={headingText} />
+                </div>
+              );
             } else if (line.startsWith('### ')) {
-              return <h3 key={i} className="text-lg font-bold mt-4 mb-2">{line.slice(4)}</h3>;
+              const headingText = line.slice(4);
+              return (
+                <div key={i} className="flex flex-wrap items-center justify-between gap-2 mt-4 mb-2">
+                  <h3 className="text-lg font-bold">{headingText}</h3>
+                  <AssessmentButton topic={findParentTopic(i, content) || headingText} subtopic={headingText} />
+                </div>
+              );
             }
             
             // Handle bullet points
@@ -77,4 +96,19 @@ export default function ResultDisplay({
       </div>
     </div>
   );
+}
+
+// Helper function to find the parent topic for a subtopic
+function findParentTopic(currentIndex: number, content: string): string | null {
+  const lines = content.split('\n');
+  
+  // Look backward from the current line to find the nearest h1 heading
+  for (let i = currentIndex - 1; i >= 0; i--) {
+    const line = lines[i];
+    if (line.startsWith('# ')) {
+      return line.slice(2);
+    }
+  }
+  
+  return null;
 }
