@@ -11,7 +11,7 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [featureIndex, setFeatureIndex] = useState(0);
-  
+
   // Learning path features to showcase
   const features = [
     {
@@ -42,22 +42,22 @@ export default function SignupPage() {
       )
     }
   ];
-  
+
   // Auto-rotate features
   useEffect(() => {
     const interval = setInterval(() => {
       setFeatureIndex((prev) => (prev + 1) % features.length);
     }, 6000);
-    
+
     return () => clearInterval(interval);
   }, [features.length]);
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Signup functionality would go here
     console.log({ fullName, email, password, confirmPassword, acceptTerms });
   };
-  
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -69,7 +69,7 @@ export default function SignupPage() {
       }
     }
   };
-  
+
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
@@ -82,11 +82,11 @@ export default function SignupPage() {
       }
     }
   };
-  
+
   const featureVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         type: "spring",
@@ -102,7 +102,7 @@ export default function SignupPage() {
       }
     }
   };
-  
+
   const floatingIconVariants = {
     animate: {
       y: [0, -10, 0],
@@ -114,52 +114,11 @@ export default function SignupPage() {
       }
     }
   };
-  
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-800 via-purple-700 to-pink-600 p-4 overflow-hidden">
-      {/* Background animation elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div 
-          className="absolute top-20 left-20 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply opacity-20 blur-3xl"
-          animate={{ 
-            x: [0, 30, 0], 
-            y: [0, 40, 0],
-          }}
-          transition={{ 
-            repeat: Infinity, 
-            duration: 15,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-20 right-20 w-80 h-80 bg-indigo-600 rounded-full mix-blend-multiply opacity-20 blur-3xl"
-          animate={{ 
-            x: [0, -50, 0], 
-            y: [0, 30, 0],
-          }}
-          transition={{ 
-            repeat: Infinity, 
-            duration: 18,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-        <motion.div 
-          className="absolute top-40 right-1/3 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply opacity-20 blur-3xl"
-          animate={{ 
-            x: [0, 40, 0], 
-            y: [0, -30, 0],
-          }}
-          transition={{ 
-            repeat: Infinity, 
-            duration: 20,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
-      </div>
-      
-      <motion.div 
+
+      <motion.div
         className="w-full max-w-5xl bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row relative z-10"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -168,7 +127,7 @@ export default function SignupPage() {
         {/* Left side: Feature showcase */}
         <div className="w-full md:w-1/2 bg-gradient-to-br from-indigo-900 to-purple-900 p-8 md:p-12 relative">
           <div className="h-full flex flex-col">
-            <motion.div 
+            <motion.div
               className="mb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -185,23 +144,23 @@ export default function SignupPage() {
               <h1 className="text-3xl font-bold text-white mb-2">Join our learning community</h1>
               <p className="text-white text-opacity-80">Create an account to start your personalized learning journey today</p>
             </motion.div>
-            
+
             {/* Feature showcase */}
             <div className="my-8 relative flex-grow">
               <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div 
+                <motion.div
                   className="w-48 h-48 bg-indigo-500 bg-opacity-20 rounded-full"
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.1, 1],
                   }}
                   transition={{
                     duration: 4,
                     repeat: Infinity,
-                    ease: "easeInOut" 
+                    ease: "easeInOut"
                   }}
                 />
               </div>
-              
+
               <div className="relative z-10 flex flex-col items-center py-8">
                 <motion.div
                   key={`icon-${featureIndex}`}
@@ -211,7 +170,7 @@ export default function SignupPage() {
                 >
                   {features[featureIndex].icon}
                 </motion.div>
-                
+
                 <motion.div
                   key={`feature-${featureIndex}`}
                   initial="hidden"
@@ -228,10 +187,10 @@ export default function SignupPage() {
                   </p>
                 </motion.div>
               </div>
-              
+
               <div className="absolute bottom-0 left-0 right-0 flex justify-center space-x-2 py-4">
                 {features.map((_, idx) => (
-                  <motion.div 
+                  <motion.div
                     key={idx}
                     className={`w-2 h-2 rounded-full ${idx === featureIndex ? 'bg-white' : 'bg-white bg-opacity-30'}`}
                     animate={{ scale: idx === featureIndex ? [1, 1.5, 1] : 1 }}
@@ -240,9 +199,9 @@ export default function SignupPage() {
                 ))}
               </div>
             </div>
-            
+
             {/* Testimonial quote */}
-            <motion.div 
+            <motion.div
               className="mt-auto bg-white bg-opacity-10 rounded-xl p-4 border border-white border-opacity-20"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -264,21 +223,21 @@ export default function SignupPage() {
             </motion.div>
           </div>
         </div>
-        
+
         {/* Right side: Signup form */}
-        <motion.div 
+        <motion.div
           className="w-full md:w-1/2 p-8 md:p-12"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <motion.h2 
+          <motion.h2
             variants={itemVariants}
             className="text-2xl font-bold text-white mb-6"
           >
             Create your account
           </motion.h2>
-          
+
           <motion.form variants={containerVariants} onSubmit={handleSubmit} className="space-y-5">
             <motion.div variants={itemVariants}>
               <label htmlFor="fullname" className="block text-white text-opacity-90 text-sm font-medium mb-2">
@@ -301,7 +260,7 @@ export default function SignupPage() {
                 />
               </div>
             </motion.div>
-            
+
             <motion.div variants={itemVariants}>
               <label htmlFor="email" className="block text-white text-opacity-90 text-sm font-medium mb-2">
                 Email
@@ -324,7 +283,7 @@ export default function SignupPage() {
                 />
               </div>
             </motion.div>
-            
+
             <motion.div variants={itemVariants}>
               <label htmlFor="password" className="block text-white text-opacity-90 text-sm font-medium mb-2">
                 Password
@@ -347,7 +306,7 @@ export default function SignupPage() {
               </div>
               <p className="mt-1 text-xs text-white text-opacity-70">At least 8 characters with letters and numbers</p>
             </motion.div>
-            
+
             <motion.div variants={itemVariants}>
               <label htmlFor="confirm-password" className="block text-white text-opacity-90 text-sm font-medium mb-2">
                 Confirm Password
@@ -369,7 +328,7 @@ export default function SignupPage() {
                 />
               </div>
             </motion.div>
-            
+
             <motion.div variants={itemVariants} className="flex items-start">
               <div className="flex items-center h-5">
                 <input
@@ -385,7 +344,7 @@ export default function SignupPage() {
                 I agree to the <Link href="#" className="text-purple-300 hover:text-purple-200">Terms of Service</Link> and <Link href="#" className="text-purple-300 hover:text-purple-200">Privacy Policy</Link>
               </label>
             </motion.div>
-            
+
             <motion.button
               variants={itemVariants}
               whileHover={{ scale: 1.03 }}
@@ -395,7 +354,7 @@ export default function SignupPage() {
             >
               Create Account
             </motion.button>
-            
+
             <motion.div variants={itemVariants} className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -405,7 +364,7 @@ export default function SignupPage() {
                   <span className="px-2 bg-transparent text-white text-opacity-60">Or sign up with</span>
                 </div>
               </div>
-              
+
               <div className="mt-6 flex justify-center space-x-4">
                 <motion.button
                   whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(124, 58, 237, 0.5)" }}
@@ -439,7 +398,7 @@ export default function SignupPage() {
                 </motion.button>
               </div>
             </motion.div>
-            
+
             <motion.div variants={itemVariants} className="mt-6 text-center">
               <p className="text-white text-opacity-70">
                 Already have an account?{' '}
